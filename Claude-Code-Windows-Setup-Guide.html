@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Claude Code — Windows Setup Guide</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: Arial, sans-serif; font-size: 15px; color: #222; background: #f9f9f9; }
+  .page { max-width: 860px; margin: 40px auto; background: white; padding: 60px 70px; box-shadow: 0 2px 16px rgba(0,0,0,0.08); }
+
+  .title-block { text-align: center; padding-bottom: 32px; border-bottom: 3px solid #048A81; margin-bottom: 40px; }
+  .title-block h1 { font-size: 42px; color: #2E4057; margin-bottom: 6px; }
+  .title-block h2 { font-size: 26px; color: #048A81; font-weight: normal; margin-bottom: 10px; }
+  .title-block p { color: #888; font-style: italic; font-size: 14px; }
+
+  h2.section { font-size: 22px; color: #2E4057; margin: 36px 0 12px 0; padding-bottom: 6px; border-bottom: 2px solid #e0e0e0; }
+  h3.sub { font-size: 17px; color: #048A81; margin: 24px 0 8px 0; }
+
+  p { margin-bottom: 12px; line-height: 1.7; }
+  ul, ol { margin: 8px 0 16px 28px; line-height: 1.9; }
+  li { margin-bottom: 4px; }
+
+  code { background: #f4f4f4; border: 1px solid #ddd; border-radius: 3px; padding: 2px 7px; font-family: 'Courier New', monospace; font-size: 13.5px; color: #c0392b; }
+  .code-block { background: #f4f4f4; border: 1px solid #ddd; border-left: 4px solid #048A81; border-radius: 4px; padding: 14px 18px; margin: 10px 0 18px 0; font-family: 'Courier New', monospace; font-size: 13.5px; color: #c0392b; line-height: 2; }
+  .code-block div { margin: 0; }
+
+  .note { background: #eaf7f6; border-left: 4px solid #048A81; padding: 12px 16px; border-radius: 4px; margin: 12px 0; font-size: 14px; color: #444; font-style: italic; }
+  .success { color: #048A81; font-style: italic; }
+
+  .footer-note { margin-top: 48px; padding-top: 16px; border-top: 2px solid #048A81; color: #888; font-style: italic; font-size: 13px; }
+
+  @media print {
+    body { background: white; }
+    .page { box-shadow: none; margin: 0; padding: 40px; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="title-block">
+    <h1>Claude Code</h1>
+    <h2>Windows Setup Guide</h2>
+    <p>For new team members joining coding-projects</p>
+  </div>
+
+  <!-- Overview -->
+  <h2 class="section">Overview</h2>
+  <p>This guide walks you through setting up Claude Code on Windows, connecting it to Git and GitHub, and joining the coding-projects repository. Follow each step in order.</p>
+  <p><strong>What you will install:</strong></p>
+  <ul>
+    <li>Node.js — required to run Claude Code</li>
+    <li>Git — version control software</li>
+    <li>Claude Code — the AI coding agent</li>
+  </ul>
+
+  <!-- Prerequisites -->
+  <h2 class="section">Prerequisites</h2>
+  <p>Before starting, make sure you have:</p>
+  <ul>
+    <li>A Claude account (claude.ai) — Pro or Max plan required for full Claude Code access</li>
+    <li>A GitHub account (github.com) — free tier is fine</li>
+    <li>Windows 10 version 2004 or later (build 19041+)</li>
+  </ul>
+
+  <!-- Step 1 -->
+  <h2 class="section">Step 1: Install Node.js</h2>
+  <ol>
+    <li>Go to <strong>nodejs.org</strong> and download the LTS version for Windows</li>
+    <li>Run the installer with default settings</li>
+    <li>When asked about <em>"automatically install the necessary tools"</em> — <strong>check this box</strong>. It installs Chocolatey, Python, and Visual Studio Build Tools which you will need for agentic development</li>
+    <li>A separate PowerShell window will open and run for a few minutes — let it finish completely before moving on</li>
+    <li>Close ALL open terminals when done</li>
+  </ol>
+  <p>Verify the install by opening a new terminal and typing:</p>
+  <div class="code-block">node --version</div>
+
+  <!-- Step 2 -->
+  <h2 class="section">Step 2: Install Git</h2>
+  <ol>
+    <li>Go to <strong>git-scm.com</strong> and download the Windows installer</li>
+    <li>Run with default settings. When asked about the default editor, choose VS Code if you have it, otherwise Notepad is fine</li>
+    <li>Open a new terminal and configure your identity (replace with your actual name and email):</li>
+  </ol>
+  <div class="code-block">
+    <div>git config --global user.name "Your Name"</div>
+    <div>git config --global user.email "you@email.com"</div>
+  </div>
+
+  <!-- Step 3 -->
+  <h2 class="section">Step 3: Install Claude Code</h2>
+  <p>Open a new terminal (search for PowerShell or Command Prompt in the Start menu) and run:</p>
+  <div class="code-block">npm install -g @anthropic-ai/claude-code</div>
+  <p>Then launch Claude Code:</p>
+  <div class="code-block">claude</div>
+  <p>A welcome/onboarding screen will appear — press <strong>Enter</strong> or <strong>Escape</strong> to get past it. Then type <code>/login</code> to open a browser window. Log in with your Anthropic account and authorize. Return to the terminal when done.</p>
+
+  <!-- Step 4 -->
+  <h2 class="section">Step 4: Set Up Your Project Folder</h2>
+  <p>Navigate to your projects drive. If you have a secondary drive (e.g. E:), use it to keep your C: drive lean. Use the <code>/d</code> flag to switch drives in Windows:</p>
+  <div class="code-block">cd /d E:\Projects</div>
+  <div class="note">The /d flag is required when switching between drives on Windows. Without it, cd will not change drives.</div>
+  <p>Your prompt should now show <code>E:\Projects&gt;</code>. If you are only using C:, run <code>cd C:\Projects</code> instead (create the folder first with <code>mkdir C:\Projects</code>).</p>
+
+  <!-- Step 5 -->
+  <h2 class="section">Step 5: Clone the Repository</h2>
+  <p>Clone the shared coding-projects repository from GitHub:</p>
+  <div class="code-block">
+    <div>git clone https://github.com/stacey-piercey/coding-projects.git</div>
+    <div>cd coding-projects</div>
+  </div>
+  <p>A browser window may open asking you to sign in to GitHub — authorize it.</p>
+  <p class="success">You should see: branch 'main' set up to track 'origin/main' — this confirms everything is connected.</p>
+
+  <!-- Step 6 -->
+  <h2 class="section">Step 6: Verify Your Setup</h2>
+  <p>Run the Claude Code health check from inside your project folder:</p>
+  <div class="code-block">/doctor</div>
+  <p>This runs a health check and confirms your setup is working correctly. Report any errors to the team lead before proceeding.</p>
+
+  <!-- Troubleshooting -->
+  <h2 class="section">Troubleshooting</h2>
+
+  <h3 class="sub">"npm is not recognized" error</h3>
+  <p>Close your terminal completely and open a fresh one. The Node.js installer updates your system PATH, but terminals that were already open won't see the change until restarted.</p>
+
+  <h3 class="sub">"cd" won't switch to another drive</h3>
+  <p>Windows requires the <code>/d</code> flag to switch drives. Use <code>cd /d E:\Projects</code> instead of <code>cd E:\Projects</code>.</p>
+
+  <h3 class="sub">"src refspec main does not match any" error on push</h3>
+  <p>This happens when trying to push an empty repository. Git won't create a branch until there is at least one commit. Create an initial commit first:</p>
+  <div class="code-block">
+    <div>echo "# project-name" &gt; README.md</div>
+    <div>git add README.md</div>
+    <div>git commit -m "first commit"</div>
+    <div>git push -u origin main</div>
+  </div>
+
+  <h3 class="sub">Computer Use is not available in Settings</h3>
+  <p>Computer Use is currently a macOS-only research preview. It is not yet available on Windows. All other Claude Code features work fully on Windows.</p>
+
+  <!-- Daily Workflow -->
+  <h2 class="section">Daily Workflow</h2>
+  <p>Once set up, your typical Claude Code session will look like this:</p>
+  <ol>
+    <li>Open a terminal and navigate to your project: <code>cd /d E:\Projects\coding-projects</code></li>
+    <li>Pull the latest changes from GitHub: <code>git pull</code></li>
+    <li>Start Claude Code: <code>claude</code></li>
+    <li>Work with Claude — it handles commits as you go</li>
+    <li>Push your work to GitHub: <code>git push</code></li>
+  </ol>
+
+  <div class="footer-note">Questions? Reach out to the team lead before your first session.</div>
+
+</div>
+</body>
+</html>
