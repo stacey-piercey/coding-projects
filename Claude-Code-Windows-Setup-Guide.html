@@ -14,7 +14,13 @@
   .title-block h2 { font-size: 26px; color: #048A81; font-weight: normal; margin-bottom: 10px; }
   .title-block p { color: #888; font-style: italic; font-size: 14px; }
 
-  h2.section { font-size: 22px; color: #2E4057; margin: 36px 0 12px 0; padding-bottom: 6px; border-bottom: 2px solid #e0e0e0; }
+  .toc { background: #f4f4f4; border-left: 4px solid #2E4057; border-radius: 4px; padding: 20px 28px; margin-bottom: 40px; }
+  .toc h3 { color: #2E4057; margin-bottom: 12px; font-size: 16px; }
+  .toc ol { margin-left: 20px; line-height: 2; }
+  .toc a { color: #048A81; text-decoration: none; }
+  .toc a:hover { text-decoration: underline; }
+
+  h2.section { font-size: 22px; color: #2E4057; margin: 40px 0 12px 0; padding-bottom: 6px; border-bottom: 2px solid #e0e0e0; }
   h3.sub { font-size: 17px; color: #048A81; margin: 24px 0 8px 0; }
 
   p { margin-bottom: 12px; line-height: 1.7; }
@@ -23,10 +29,21 @@
 
   code { background: #f4f4f4; border: 1px solid #ddd; border-radius: 3px; padding: 2px 7px; font-family: 'Courier New', monospace; font-size: 13.5px; color: #c0392b; }
   .code-block { background: #f4f4f4; border: 1px solid #ddd; border-left: 4px solid #048A81; border-radius: 4px; padding: 14px 18px; margin: 10px 0 18px 0; font-family: 'Courier New', monospace; font-size: 13.5px; color: #c0392b; line-height: 2; }
-  .code-block div { margin: 0; }
 
-  .note { background: #eaf7f6; border-left: 4px solid #048A81; padding: 12px 16px; border-radius: 4px; margin: 12px 0; font-size: 14px; color: #444; font-style: italic; }
+  .note { background: #eaf7f6; border-left: 4px solid #048A81; padding: 12px 16px; border-radius: 4px; margin: 12px 0 16px 0; font-size: 14px; color: #444; }
+  .warning { background: #fff8e6; border-left: 4px solid #f0a500; padding: 12px 16px; border-radius: 4px; margin: 12px 0 16px 0; font-size: 14px; color: #444; }
+  .explain { background: #f7f7fb; border-left: 4px solid #2E4057; padding: 12px 16px; border-radius: 4px; margin: 12px 0 16px 0; font-size: 14px; color: #444; font-style: italic; }
   .success { color: #048A81; font-style: italic; }
+
+  .extension-card { border: 1px solid #e0e0e0; border-radius: 6px; padding: 16px 20px; margin: 12px 0; }
+  .extension-card .ext-name { font-weight: bold; color: #2E4057; font-size: 16px; margin-bottom: 4px; }
+  .extension-card .ext-author { font-size: 12px; color: #888; margin-bottom: 8px; }
+  .extension-card .ext-desc { font-size: 14px; color: #444; line-height: 1.6; }
+
+  .checklist { background: #eaf7f6; border-radius: 6px; padding: 20px 28px; margin: 24px 0; }
+  .checklist h3 { color: #048A81; margin-bottom: 12px; }
+  .checklist li { list-style: none; margin-bottom: 6px; padding-left: 4px; }
+  .checklist li::before { content: "✅ "; }
 
   .footer-note { margin-top: 48px; padding-top: 16px; border-top: 2px solid #048A81; color: #888; font-style: italic; font-size: 13px; }
 
@@ -42,116 +59,218 @@
   <div class="title-block">
     <h1>Claude Code</h1>
     <h2>Windows Setup Guide</h2>
-    <p>For new team members joining coding-projects</p>
+    <p>For new team members joining coding-projects — no prior coding or environment knowledge needed</p>
   </div>
 
-  <!-- Overview -->
-  <h2 class="section">Overview</h2>
-  <p>This guide walks you through setting up Claude Code on Windows, connecting it to Git and GitHub, and joining the coding-projects repository. Follow each step in order.</p>
-  <p><strong>What you will install:</strong></p>
-  <ul>
-    <li>Node.js — required to run Claude Code</li>
-    <li>Git — version control software</li>
-    <li>Claude Code — the AI coding agent</li>
-  </ul>
+  <div class="toc">
+    <h3>What we are setting up today</h3>
+    <ol>
+      <li><a href="#overview">Overview — what all this software is and why you need it</a></li>
+      <li><a href="#prereqs">Prerequisites — what to have ready before you start</a></li>
+      <li><a href="#nodejs">Step 1 — Install Node.js</a></li>
+      <li><a href="#git">Step 2 — Install Git</a></li>
+      <li><a href="#claudecode">Step 3 — Install Claude Code</a></li>
+      <li><a href="#folder">Step 4 — Set up your project folder</a></li>
+      <li><a href="#clone">Step 5 — Clone the repository</a></li>
+      <li><a href="#vscode">Step 6 — Set up VS Code</a></li>
+      <li><a href="#verify">Step 7 — Verify your setup</a></li>
+      <li><a href="#workflow">Daily workflow</a></li>
+      <li><a href="#trouble">Troubleshooting</a></li>
+    </ol>
+  </div>
 
-  <!-- Prerequisites -->
-  <h2 class="section">Prerequisites</h2>
+  <h2 class="section" id="overview">Overview</h2>
+  <p>Before touching anything, here is a plain-English explanation of what you are installing and how it all fits together.</p>
+  <div class="explain"><strong>Think of it like a workshop.</strong> Your computer is the workshop. The tools on your workbench are the software. Each tool has a specific job, and they are designed to work together.</div>
+
+  <p><strong>Node.js</strong> is a runtime environment — it allows JavaScript-based tools like Claude Code to run on your computer outside of a browser. You will not interact with it directly, but Claude Code cannot work without it. Think of it as the electrical wiring behind the wall.</p>
+  <p><strong>Git</strong> is version control software. Every time you save a meaningful change to your project, Git records a snapshot of it with a message explaining what changed. You always have a full history of every decision ever made, and you can roll back to any previous version if something goes wrong. Think of it as an infinite undo button with a logbook attached.</p>
+  <p><strong>GitHub</strong> is the cloud platform where your Git history lives online. Your local copy of the project lives on your computer; GitHub is the shared copy everyone on the team can access and contribute to. Think of it as Google Drive, but specifically built for code and built-in version history.</p>
+  <p><strong>Claude Code</strong> is your AI coding agent. It lives in the terminal and works alongside you — writing code, explaining concepts, running commands, making commits, and helping you learn as you build. It is not just a chatbot; it can take real actions inside your project on your behalf.</p>
+  <p><strong>VS Code (Visual Studio Code)</strong> is your code editor — where you read, write, and review code. It is like Microsoft Word, but for code. It has built-in Git support, a terminal you can run right inside it, and extensions that make development faster and easier.</p>
+  <div class="explain"><strong>How they connect:</strong> You write and review code in VS Code → Git tracks every change with a message → GitHub backs it up to the cloud so the team can access it → Claude Code assists you throughout the whole process from inside the terminal.</div>
+
+  <h2 class="section" id="prereqs">Prerequisites</h2>
   <p>Before starting, make sure you have:</p>
   <ul>
-    <li>A Claude account (claude.ai) — Pro or Max plan required for full Claude Code access</li>
-    <li>A GitHub account (github.com) — free tier is fine</li>
-    <li>Windows 10 version 2004 or later (build 19041+)</li>
+    <li>A <strong>Claude account</strong> at claude.ai — Pro or Max plan required for full Claude Code access</li>
+    <li>A <strong>GitHub account</strong> at github.com — the free tier is fine</li>
+    <li><strong>VS Code</strong> installed — download free at code.visualstudio.com if needed</li>
+    <li><strong>Windows 10</strong> version 2004 or later (build 19041+)</li>
+    <li>Admin access to your computer</li>
   </ul>
 
-  <!-- Step 1 -->
-  <h2 class="section">Step 1: Install Node.js</h2>
+  <h2 class="section" id="nodejs">Step 1: Install Node.js</h2>
   <ol>
-    <li>Go to <strong>nodejs.org</strong> and download the LTS version for Windows</li>
-    <li>Run the installer with default settings</li>
-    <li>When asked about <em>"automatically install the necessary tools"</em> — <strong>check this box</strong>. It installs Chocolatey, Python, and Visual Studio Build Tools which you will need for agentic development</li>
-    <li>A separate PowerShell window will open and run for a few minutes — let it finish completely before moving on</li>
-    <li>Close ALL open terminals when done</li>
+    <li>Go to <strong>nodejs.org</strong> and download the <strong>LTS</strong> version for Windows. LTS stands for Long Term Support — the stable, recommended version.</li>
+    <li>Run the installer. The default settings are fine for everything.</li>
+    <li>When asked about <em>"automatically install the necessary tools"</em> — <strong>check this box</strong>. It installs Chocolatey, Python, and Visual Studio Build Tools. Some packages need these to compile and you will want them for agentic development.</li>
+    <li>A separate black PowerShell window will open after Node installs and run for several minutes. <strong>Do not close it</strong> — let it finish on its own.</li>
+    <li>When it is done, <strong>close all open terminals</strong> before moving on. The installer updated your system PATH and existing terminals will not see the change until restarted.</li>
   </ol>
-  <p>Verify the install by opening a new terminal and typing:</p>
+  <p>Open a fresh terminal and verify:</p>
   <div class="code-block">node --version</div>
+  <p class="success">You should see a version number like v22.0.0 — any number means it worked.</p>
 
-  <!-- Step 2 -->
-  <h2 class="section">Step 2: Install Git</h2>
+  <h2 class="section" id="git">Step 2: Install Git</h2>
   <ol>
-    <li>Go to <strong>git-scm.com</strong> and download the Windows installer</li>
-    <li>Run with default settings. When asked about the default editor, choose VS Code if you have it, otherwise Notepad is fine</li>
-    <li>Open a new terminal and configure your identity (replace with your actual name and email):</li>
+    <li>Go to <strong>git-scm.com</strong> and download the Windows installer.</li>
+    <li>Run it with default settings — just click Next until it installs.</li>
+    <li>When asked to choose a default editor, select <strong>VS Code</strong> from the dropdown. This means Git will open VS Code whenever it needs you to write something, instead of a confusing text editor.</li>
   </ol>
+  <p>Open a new terminal and tell Git who you are. This name and email will be attached to every change you make so the team knows who did what:</p>
   <div class="code-block">
-    <div>git config --global user.name "Your Name"</div>
-    <div>git config --global user.email "you@email.com"</div>
+    git config --global user.name "Your Name"<br>
+    git config --global user.email "you@email.com"
   </div>
+  <div class="note">Use your real name and the same email address you signed up to GitHub with.</div>
 
-  <!-- Step 3 -->
-  <h2 class="section">Step 3: Install Claude Code</h2>
-  <p>Open a new terminal (search for PowerShell or Command Prompt in the Start menu) and run:</p>
+  <h2 class="section" id="claudecode">Step 3: Install Claude Code</h2>
+  <p>Claude Code is installed through npm — Node's package manager, a tool that downloads and installs software. It was installed automatically with Node.js in Step 1.</p>
+  <p>Open a new terminal and run:</p>
   <div class="code-block">npm install -g @anthropic-ai/claude-code</div>
-  <p>Then launch Claude Code:</p>
+  <div class="explain">The <code>-g</code> flag means "install globally" — Claude Code will be available from any folder on your computer, not just one specific project.</div>
+  <p>Once installed, launch it:</p>
   <div class="code-block">claude</div>
-  <p>A welcome/onboarding screen will appear — press <strong>Enter</strong> or <strong>Escape</strong> to get past it. Then type <code>/login</code> to open a browser window. Log in with your Anthropic account and authorize. Return to the terminal when done.</p>
+  <p>A welcome screen will appear. Press <strong>Enter</strong> or <strong>Escape</strong> to get past it. Then type:</p>
+  <div class="code-block">/login</div>
+  <p>A browser window will open. Log in with your Anthropic account and click Authorize. Return to the terminal when done.</p>
 
-  <!-- Step 4 -->
-  <h2 class="section">Step 4: Set Up Your Project Folder</h2>
-  <p>Navigate to your projects drive. If you have a secondary drive (e.g. E:), use it to keep your C: drive lean. Use the <code>/d</code> flag to switch drives in Windows:</p>
+  <h2 class="section" id="folder">Step 4: Set Up Your Project Folder</h2>
+  <p>We keep all projects on the E: drive to preserve space on the C: drive, which is where Windows and system files live. This is good practice.</p>
+  <div class="warning"><strong>Windows quirk:</strong> The normal <code>cd</code> command will not switch between drives. You need to add <code>/d</code> to do it. This trips everyone up the first time.</div>
   <div class="code-block">cd /d E:\Projects</div>
-  <div class="note">The /d flag is required when switching between drives on Windows. Without it, cd will not change drives.</div>
-  <p>Your prompt should now show <code>E:\Projects&gt;</code>. If you are only using C:, run <code>cd C:\Projects</code> instead (create the folder first with <code>mkdir C:\Projects</code>).</p>
+  <p>Your terminal prompt should change to <code>E:\Projects&gt;</code> — that confirms you are in the right place.</p>
+  <div class="note">If you only have a C: drive, run <code>mkdir C:\Projects</code> then <code>cd C:\Projects</code> instead.</div>
 
-  <!-- Step 5 -->
-  <h2 class="section">Step 5: Clone the Repository</h2>
-  <p>Clone the shared coding-projects repository from GitHub:</p>
+  <h2 class="section" id="clone">Step 5: Clone the Repository</h2>
+  <div class="explain"><strong>What is cloning?</strong> Cloning downloads a complete copy of the project from GitHub to your computer — including all files and the full history of every change ever made. After cloning, your computer and GitHub are in sync and ready to work.</div>
   <div class="code-block">
-    <div>git clone https://github.com/stacey-piercey/coding-projects.git</div>
-    <div>cd coding-projects</div>
+    git clone https://github.com/stacey-piercey/coding-projects.git<br>
+    cd coding-projects
   </div>
   <p>A browser window may open asking you to sign in to GitHub — authorize it.</p>
-  <p class="success">You should see: branch 'main' set up to track 'origin/main' — this confirms everything is connected.</p>
+  <p class="success">You should see: branch 'main' set up to track 'origin/main' — this means your local copy is connected to GitHub and ready to sync.</p>
 
-  <!-- Step 6 -->
-  <h2 class="section">Step 6: Verify Your Setup</h2>
-  <p>Run the Claude Code health check from inside your project folder:</p>
-  <div class="code-block">/doctor</div>
-  <p>This runs a health check and confirms your setup is working correctly. Report any errors to the team lead before proceeding.</p>
+  <h2 class="section" id="vscode">Step 6: Set Up VS Code</h2>
+  <div class="explain"><strong>What is VS Code?</strong> Visual Studio Code is a free code editor made by Microsoft. It is where you will read and review code, browse your project files, and run your terminal — all in one window. Think of it as your main cockpit for development.</div>
 
-  <!-- Troubleshooting -->
-  <h2 class="section">Troubleshooting</h2>
+  <h3 class="sub">Open your project</h3>
+  <ol>
+    <li>Open VS Code</li>
+    <li>Click <strong>Open Folder</strong></li>
+    <li>Navigate to <code>E:\Projects\coding-projects</code> and click <strong>Select Folder</strong></li>
+  </ol>
+  <p>Your project files will appear in the left sidebar — that is the <strong>Explorer panel</strong>, your file browser. Everything in your project lives there. Click any file to open it.</p>
+  <div class="note">Look at the bottom left corner of VS Code — you should see a branch icon with the word <strong>main</strong> next to it. That means VS Code has already detected your Git repo and is connected to it.</div>
 
-  <h3 class="sub">"npm is not recognized" error</h3>
-  <p>Close your terminal completely and open a fresh one. The Node.js installer updates your system PATH, but terminals that were already open won't see the change until restarted.</p>
+  <h3 class="sub">Install extensions</h3>
+  <div class="explain"><strong>What are extensions?</strong> Extensions are add-ons that give VS Code extra capabilities. VS Code is intentionally minimal out of the box — you add what you need. Click the four-squares icon in the left sidebar to open the Extensions panel, then search for and install each one below.</div>
 
-  <h3 class="sub">"cd" won't switch to another drive</h3>
-  <p>Windows requires the <code>/d</code> flag to switch drives. Use <code>cd /d E:\Projects</code> instead of <code>cd E:\Projects</code>.</p>
-
-  <h3 class="sub">"src refspec main does not match any" error on push</h3>
-  <p>This happens when trying to push an empty repository. Git won't create a branch until there is at least one commit. Create an initial commit first:</p>
-  <div class="code-block">
-    <div>echo "# project-name" &gt; README.md</div>
-    <div>git add README.md</div>
-    <div>git commit -m "first commit"</div>
-    <div>git push -u origin main</div>
+  <div class="extension-card">
+    <div class="ext-name">GitLens</div>
+    <div class="ext-author">Publisher: GitKraken</div>
+    <div class="ext-desc">Supercharges Git inside VS Code. Hover over any line of code and GitLens shows you who wrote it, when, and what their commit message said. As your team grows this becomes invaluable for understanding why code exists and who to ask about it.</div>
   </div>
 
-  <h3 class="sub">Computer Use is not available in Settings</h3>
-  <p>Computer Use is currently a macOS-only research preview. It is not yet available on Windows. All other Claude Code features work fully on Windows.</p>
+  <div class="extension-card">
+    <div class="ext-name">Prettier - Code formatter</div>
+    <div class="ext-author">Publisher: esbenp — look for this exact publisher name when searching</div>
+    <div class="ext-desc">Automatically formats your code so it always looks clean and consistent — proper indentation, spacing, and line breaks handled for you on every save. When everyone on the team uses Prettier, all code looks the same regardless of who wrote it, which makes reading each other's work much easier.</div>
+  </div>
 
-  <!-- Daily Workflow -->
-  <h2 class="section">Daily Workflow</h2>
-  <p>Once set up, your typical Claude Code session will look like this:</p>
+  <div class="extension-card">
+    <div class="ext-name">ESLint</div>
+    <div class="ext-author">Publisher: Microsoft</div>
+    <div class="ext-desc">Catches errors and bad practices in your JavaScript code as you type — before you even run it. Red underlines appear under problems, just like spell-check in Word. Think of it as a code reviewer looking over your shoulder in real time.</div>
+  </div>
+
+  <div class="extension-card">
+    <div class="ext-name">Live Server</div>
+    <div class="ext-author">Publisher: Ritwick Dey</div>
+    <div class="ext-desc">Lets you preview websites and web apps in your browser with one click, and automatically refreshes the page every time you save a file. Essential for web development — instead of manually refreshing your browser after every change, it happens instantly and automatically.</div>
+  </div>
+
+  <div class="extension-card">
+    <div class="ext-name">indent-rainbow</div>
+    <div class="ext-author">Publisher: oderwat</div>
+    <div class="ext-desc">Colors each level of indentation a different color. Code structure is built on indentation — this makes it immediately obvious how your code is nested and organized. Particularly helpful when you are learning to read code for the first time.</div>
+  </div>
+
+  <h3 class="sub">Open the built-in terminal</h3>
+  <p>VS Code has a terminal built right in — you do not need to switch between windows. Open it with:</p>
+  <div class="code-block">Ctrl + `&nbsp;&nbsp;&nbsp;(the backtick key — top left of keyboard, above Tab, shares a key with ~)</div>
+  <p>This toggles the terminal open and closed. From now on, run all your Git and Claude Code commands from here.</p>
+  <div class="warning"><strong>Common mistake:</strong> Do not press Ctrl + ] — that zooms your editor in to a huge font size. The key you want is the backtick: `</div>
+
+  <h3 class="sub">Set VS Code as your Git editor</h3>
+  <p>Run this in the VS Code terminal. It tells Git to open VS Code whenever it needs you to write something, so you will never get stuck in a confusing text editor:</p>
+  <div class="code-block">git config --global core.editor "code --wait"</div>
+  <p class="success">If the command runs with no error message, it worked.</p>
+
+  <h2 class="section" id="verify">Step 7: Verify Your Setup</h2>
+  <p>In the VS Code terminal, make sure you are in the project folder:</p>
+  <div class="code-block">cd /d E:\Projects\coding-projects</div>
+  <p>Then launch Claude Code and run the health check:</p>
+  <div class="code-block">claude</div>
+  <div class="code-block">/doctor</div>
+  <p>This checks that everything is connected and working correctly. Report any errors to the team lead before proceeding.</p>
+
+  <div class="checklist">
+    <h3>Setup complete checklist</h3>
+    <ul>
+      <li>Node.js installed and verified with node --version</li>
+      <li>Git installed and configured with your name and email</li>
+      <li>Claude Code installed and logged in</li>
+      <li>coding-projects repo cloned to your computer</li>
+      <li>VS Code open with the project loaded in the Explorer panel</li>
+      <li>All 5 extensions installed</li>
+      <li>VS Code set as your default Git editor</li>
+      <li>/doctor shows no errors</li>
+    </ul>
+  </div>
+
+  <h2 class="section" id="workflow">Daily Workflow</h2>
+  <div class="explain"><strong>The golden rule of Git:</strong> Always pull before you push. Pulling downloads your teammates' latest changes from GitHub. Pushing uploads yours. If you push without pulling first, Git will reject it because your copy is behind. Make pulling a reflex — do it every time you sit down to work.</div>
   <ol>
-    <li>Open a terminal and navigate to your project: <code>cd /d E:\Projects\coding-projects</code></li>
-    <li>Pull the latest changes from GitHub: <code>git pull</code></li>
+    <li>Open VS Code and open the terminal with <code>Ctrl + `</code></li>
+    <li>Navigate to the project: <code>cd /d E:\Projects\coding-projects</code></li>
+    <li><strong>Pull first</strong> — get your teammates' latest changes: <code>git pull</code></li>
     <li>Start Claude Code: <code>claude</code></li>
-    <li>Work with Claude — it handles commits as you go</li>
-    <li>Push your work to GitHub: <code>git push</code></li>
+    <li>Build something</li>
+    <li>Commit your work with a clear message: <code>git commit -m "describe what you changed and why"</code></li>
+    <li><strong>Push</strong> your changes to GitHub: <code>git push</code></li>
   </ol>
+  <div class="note"><strong>Write meaningful commit messages.</strong> "fix bug" tells nobody anything in three weeks. "fix login button not responding on mobile" tells everyone exactly what happened and why. Write messages as if you are leaving a note for your future self — because you are.</div>
 
-  <div class="footer-note">Questions? Reach out to the team lead before your first session.</div>
+  <h2 class="section" id="trouble">Troubleshooting</h2>
+
+  <h3 class="sub">"npm is not recognized" error</h3>
+  <p>Close your terminal completely and open a fresh one. The Node.js installer updates your system PATH — a list of places Windows looks for programs — but terminals that were already open when Node installed will not see the update until restarted.</p>
+
+  <h3 class="sub">"cd" will not switch to another drive</h3>
+  <p>Windows requires the <code>/d</code> flag when switching between drives. Use <code>cd /d E:\Projects</code> instead of <code>cd E:\Projects</code>. Without <code>/d</code> the command is silently ignored and nothing happens.</p>
+
+  <h3 class="sub">Push rejected with "fetch first" error</h3>
+  <p>GitHub has changes your local copy does not have yet — usually because a teammate pushed something, or a change was made directly on GitHub. Pull first, then push:</p>
+  <div class="code-block">git pull<br>git push</div>
+
+  <h3 class="sub">VS Code opens during git pull and waits</h3>
+  <p>Git is asking you to confirm a merge message — an explanation of why two sets of changes are being combined. The default message it provides is always fine. Save and close the VS Code tab that opened, and Git will continue automatically.</p>
+
+  <h3 class="sub">"src refspec main does not match any" on first push</h3>
+  <p>Git will not create a branch until there is at least one commit. If you initialized a brand new repo and tried to push immediately, you need a first commit:</p>
+  <div class="code-block">
+    echo "# project-name" &gt; README.md<br>
+    git add README.md<br>
+    git commit -m "first commit"<br>
+    git push -u origin main
+  </div>
+
+  <h3 class="sub">Computer Use is missing from Claude settings</h3>
+  <p>Computer Use — the feature that lets Claude click around your actual desktop — is currently available on macOS only and is not yet available on Windows. All other Claude Code features work fully on Windows. This will change as the feature matures.</p>
+
+  <div class="footer-note">Questions? Reach out to the team lead before your first session. Do not guess — asking is always faster than troubleshooting alone.</div>
 
 </div>
 </body>
