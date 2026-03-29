@@ -97,6 +97,7 @@
   <p><strong>GitHub</strong> is the cloud platform where your Git history lives online. Your local copy of the project lives on your computer; GitHub is the shared copy everyone on the team can access and contribute to. Think of it as Google Drive, but built specifically for code with built-in version history.</p>
   <p><strong>Claude Code</strong> is your AI coding agent. It lives in the terminal and works alongside you — writing code, explaining concepts, running commands, making commits, and helping you learn as you build. It is not just a chatbot; it can take real actions inside your project on your behalf.</p>
   <p><strong>VS Code (Visual Studio Code)</strong> is your code editor — where you read, write, and review code. It is like Microsoft Word, but for code. It has built-in Git support, a terminal you can run right inside it, and extensions that make development faster and easier.</p>
+  <p><strong>PowerShell</strong> is the terminal you will use for all commands throughout this guide. It is the modern Windows command line and is the default terminal inside VS Code. All commands in this guide are written for PowerShell.</p>
 
   <div class="explain"><strong>How they connect:</strong> You write and review code in VS Code → Git tracks every change with a message → GitHub backs it up to the cloud so the team can access it → Claude Code assists you throughout the whole process from inside the terminal → Node.js powers the tools and the React frontend → Python powers the application backend and AI features.</div>
 
@@ -161,6 +162,7 @@
     <li><strong>Windows 10</strong> version 2004 or later (build 19041+)</li>
     <li>Admin access to your computer</li>
   </ul>
+  <div class="note"><strong>Use PowerShell for all commands in this guide.</strong> PowerShell is the default terminal in VS Code and is the modern Windows command line. Do not use Command Prompt — it handles some commands differently and will cause confusion.</div>
 
   <!-- Step 1 - Node.js -->
   <h2 class="section" id="nodejs">Step 1: Install Node.js</h2>
@@ -172,7 +174,7 @@
     <li>A separate black PowerShell window will open after Node installs and run for several minutes. <strong>Do not close it</strong> — let it finish on its own.</li>
     <li>When it is done, <strong>close all open terminals</strong> before moving on. The installer updated your system PATH and existing terminals will not see the change until restarted.</li>
   </ol>
-  <p>Open a fresh terminal and verify:</p>
+  <p>Open a fresh PowerShell terminal and verify:</p>
   <div class="code-block">node --version</div>
   <p class="success">You should see a version number like v22.0.0 — any number means it worked.</p>
 
@@ -186,7 +188,7 @@
     <li>Click <strong>Install Now</strong> and let it complete</li>
     <li>Close all terminals when done</li>
   </ol>
-  <p>Open a fresh terminal and verify:</p>
+  <p>Open a fresh PowerShell terminal and verify:</p>
   <div class="code-block">python --version</div>
   <p class="success">You should see something like Python 3.12.0 — any 3.x number means it worked.</p>
   <p>Also verify pip installed correctly — pip is Python's package manager, the equivalent of npm for Node:</p>
@@ -200,7 +202,7 @@
     <li>Run it with default settings — just click Next until it installs.</li>
     <li>When asked to choose a default editor, select <strong>VS Code</strong> from the dropdown. This means Git will open VS Code whenever it needs you to write something, instead of a confusing text editor.</li>
   </ol>
-  <p>Open a new terminal and tell Git who you are. This name and email will be attached to every change you make so the team knows who did what:</p>
+  <p>Open a fresh PowerShell terminal and tell Git who you are. This name and email will be attached to every change you make so the team knows who did what:</p>
   <div class="code-block">
     git config --global user.name "Your Name"<br>
     git config --global user.email "you@email.com"
@@ -220,15 +222,9 @@
 
   <!-- Step 5 - Project folder -->
   <h2 class="section" id="folder">Step 5: Set Up Your Project Folder</h2>
-  <p>We keep all projects on the E: drive to preserve space on the C: drive, which is where Windows and system files live.</p>
-  <div class="warning"><strong>PowerShell vs Command Prompt:</strong> These two terminals handle drive switching differently. In PowerShell (the default in VS Code), you do NOT need the /d flag — just use cd normally. In Command Prompt, you DO need /d to switch drives. When in doubt, check which terminal you are using.</div>
-
-  <p>In PowerShell (VS Code terminal):</p>
+  <p>We keep all projects on the E: drive to preserve space on the C: drive, which is where Windows and system files live. In PowerShell, switching drives is simple — just use <code>cd</code> normally with the full path:</p>
   <div class="code-block">cd E:\Projects</div>
-
-  <p>In Command Prompt only:</p>
-  <div class="code-block">cd /d E:\Projects</div>
-
+  <p>Your terminal prompt should change to show <code>E:\Projects</code> — that confirms you are in the right place.</p>
   <div class="note">If you only have a C: drive, run <code>mkdir C:\Projects</code> then <code>cd C:\Projects</code> instead.</div>
 
   <!-- Step 6 - Clone -->
@@ -256,6 +252,12 @@
 
   <h3 class="sub">Skip the Copilot prompt</h3>
   <p>VS Code may ask if you want to install GitHub Copilot — skip it. You are using Claude Code as your AI coding agent. They would be redundant.</p>
+
+  <h3 class="sub">Use PowerShell in the terminal</h3>
+  <p>Open the built-in terminal with:</p>
+  <div class="code-block">Ctrl + `&nbsp;&nbsp;&nbsp;(the backtick key — top left of keyboard, above Tab, shares a key with ~)</div>
+  <p>VS Code defaults to PowerShell — confirm it says <strong>PowerShell</strong> in the terminal dropdown on the right side of the terminal panel. If it shows Command Prompt, click the dropdown and switch to PowerShell. Use PowerShell for all commands from this point forward.</p>
+  <div class="warning"><strong>Common mistake:</strong> Do not press Ctrl + ] — that zooms your editor to a huge font size. The key you want is the backtick: `</div>
 
   <h3 class="sub">Install extensions</h3>
   <div class="explain"><strong>What are extensions?</strong> Extensions are add-ons that give VS Code extra capabilities. VS Code is intentionally minimal out of the box — you add what you need. Click the four-squares icon in the left sidebar to open the Extensions panel, then search for and install each one below.</div>
@@ -293,23 +295,17 @@
   <div class="extension-card">
     <div class="ext-name">indent-rainbow</div>
     <div class="ext-author">Publisher: oderwat</div>
-    <div class="ext-desc">Colors each level of indentation a different color. Code structure is built on indentation — especially in Python where indentation is not just style but syntax. This makes it immediately obvious how your code is nested and organized.</div>
+    <div class="ext-desc">Colors each level of indentation a different color. This is especially important in Python where indentation is not just style — it is syntax. Python uses indentation to define code blocks, so a wrong indent is a broken program. This extension makes indentation immediately visible and easy to read.</div>
   </div>
 
-  <h3 class="sub">Open the built-in terminal</h3>
-  <p>VS Code has a terminal built right in — you do not need to switch between windows. Open it with:</p>
-  <div class="code-block">Ctrl + `&nbsp;&nbsp;&nbsp;(the backtick key — top left of keyboard, above Tab, shares a key with ~)</div>
-  <p>This toggles the terminal open and closed. From now on, run all your Git, Python, and Claude Code commands from here.</p>
-  <div class="warning"><strong>Common mistake:</strong> Do not press Ctrl + ] — that zooms your editor to a huge font size. The key you want is the backtick: `</div>
-
   <h3 class="sub">Set VS Code as your Git editor</h3>
-  <p>Run this in the VS Code terminal. It tells Git to open VS Code whenever it needs you to write something — so you will never get stuck in a confusing text editor:</p>
+  <p>Run this in the VS Code PowerShell terminal. It tells Git to open VS Code whenever it needs you to write something — so you will never get stuck in a confusing text editor:</p>
   <div class="code-block">git config --global core.editor "code --wait"</div>
   <p class="success">If the command runs with no error message, it worked.</p>
 
   <!-- Step 8 - Verify -->
   <h2 class="section" id="verify">Step 8: Verify Your Setup</h2>
-  <p>In the VS Code terminal, confirm all tools are installed correctly:</p>
+  <p>In the VS Code PowerShell terminal, confirm all tools are installed correctly:</p>
   <div class="code-block">
     node --version<br>
     python --version<br>
@@ -332,6 +328,7 @@
       <li>Claude Code installed and logged in</li>
       <li>coding-projects repo cloned to your computer</li>
       <li>VS Code open with the project loaded in the Explorer panel</li>
+      <li>Terminal is set to PowerShell inside VS Code</li>
       <li>All 6 extensions installed including the Python extension</li>
       <li>VS Code set as your default Git editor</li>
       <li>/doctor shows no errors</li>
@@ -342,7 +339,7 @@
   <h2 class="section" id="workflow">Daily Workflow</h2>
   <div class="explain"><strong>The golden rule of Git:</strong> Always pull before you push. Pulling downloads your teammates' latest changes from GitHub. Pushing uploads yours. If you push without pulling first, Git will reject it because your copy is behind. Make pulling a reflex — do it every time you sit down to work.</div>
   <ol>
-    <li>Open VS Code and open the terminal with <code>Ctrl + `</code></li>
+    <li>Open VS Code and open the PowerShell terminal with <code>Ctrl + `</code></li>
     <li>Navigate to the project: <code>cd E:\Projects\coding-projects</code></li>
     <li><strong>Pull first</strong> — get your teammates' latest changes: <code>git pull</code></li>
     <li>Start Claude Code: <code>claude</code></li>
@@ -361,8 +358,8 @@
   <h3 class="sub">"python is not recognized" error</h3>
   <p>You likely missed the "Add Python to PATH" checkbox during installation. The quickest fix is to uninstall Python and reinstall it, making sure to check that box on the first screen. Alternatively try using <code>python3</code> instead of <code>python</code> — some Windows setups use that command instead.</p>
 
-  <h3 class="sub">cd will not switch to another drive in Command Prompt</h3>
-  <p>Command Prompt requires the <code>/d</code> flag when switching between drives: <code>cd /d E:\Projects</code>. PowerShell (the default terminal in VS Code) does not need this flag — just use <code>cd E:\Projects</code> normally.</p>
+  <h3 class="sub">Terminal is showing Command Prompt instead of PowerShell</h3>
+  <p>Click the dropdown arrow next to the terminal name in VS Code, select PowerShell, and use that for all commands. All commands in this guide are written for PowerShell. Command Prompt handles some things differently and will cause confusion.</p>
 
   <h3 class="sub">Push rejected with "fetch first" error</h3>
   <p>GitHub has changes your local copy does not have yet — usually because a teammate pushed something, or a change was made directly on GitHub. Pull first, then push:</p>
