@@ -10,7 +10,7 @@ Each subfolder is its own self-contained project with its own purpose, stack, an
 
 ## Who this is for
 
-Two people learning together. If you're new to the team, start with the [onboarding guide](./Claude-Code-Windows-Setup-Guide.docx) to get your environment set up.
+Two people learning together. If you're new to the team, start with the [onboarding guide](https://stacey-piercey.github.io/coding-projects/Claude-Code-Windows-Setup-Guide.html) to get your environment set up.
 
 ## What we might build
 
