@@ -182,18 +182,24 @@
   <h2 class="section" id="python">Step 2: Install Python</h2>
   <div class="explain"><strong>What Python does here:</strong> Python is the language you will write for the application backend and all AI features. It is the dominant language in AI and data science — virtually every AI tool, framework, and library is built Python-first. This is the language you will spend the most time writing.</div>
   <ol>
-    <li>Go to <strong>python.org</strong> and download the latest stable version for Windows (3.12 or higher)</li>
-    <li>Run the installer</li>
-    <li><strong>Critical:</strong> On the first screen, check the box that says <strong>"Add Python to PATH"</strong> before clicking Install. If you miss this, Python will install but Windows will not be able to find it from the terminal.</li>
-    <li>Click <strong>Install Now</strong> and let it complete</li>
-    <li>Close all terminals when done</li>
+    <li>Open the <strong>Start menu</strong> and search for <strong>Python install manager</strong> — Windows will find it in the Microsoft Store. Install and open it.</li>
+    <li>A terminal window will open and walk you through configuration. Answer each prompt as follows:</li>
   </ol>
-  <p>Open a fresh PowerShell terminal and verify:</p>
+  <div class="note">The Python install manager handles PATH configuration automatically — you do not need to worry about checking any boxes.</div>
+  <p>Answer each prompt like this:</p>
+  <ul>
+    <li><strong>"Windows is not configured to allow paths longer than 260 characters... Update setting now?"</strong> → type <code>y</code> and press Enter. This prevents mysterious errors with long file paths in packages.</li>
+    <li><strong>"The legacy 'py' command is still installed... Open Installed apps now?"</strong> → type <code>y</code>, find <strong>Python Launcher</strong> in the list and uninstall it. Return to the terminal when done.</li>
+    <li><strong>"Add commands directory to your PATH now?"</strong> → type <code>y</code> and press Enter.</li>
+    <li><strong>"Install the current latest version of CPython?"</strong> → type <code>y</code> and press Enter.</li>
+  </ul>
+  <p>When configuration is complete, close the terminal window. Then close the VS Code terminal panel (click the trash icon) and reopen it with <code>Ctrl + `</code>. Verify Python installed correctly:</p>
   <div class="code-block">python --version</div>
-  <p class="success">You should see something like Python 3.12.0 — any 3.x number means it worked.</p>
+  <p class="success">You should see something like Python 3.14.0 — any 3.x number means it worked.</p>
   <p>Also verify pip installed correctly — pip is Python's package manager, the equivalent of npm for Node:</p>
   <div class="code-block">pip --version</div>
-  <div class="note">If <code>python</code> is not recognized but <code>python3</code> works, use <code>python3</code> and <code>pip3</code> throughout the project. This is a common Windows quirk.</div>
+  <p class="success">You should see a pip version number followed by the Python version and install path.</p>
+  <div class="note">Python installs to C:\Python3xx\ — this is correct. Python is a system tool like Node.js, not a project. Your project code lives on E:, but language runtimes live on C:. That is the right separation.</div>
 
   <!-- Step 3 - Git -->
   <h2 class="section" id="git">Step 3: Install Git</h2>
@@ -205,7 +211,7 @@
   <p>Open a fresh PowerShell terminal and tell Git who you are. This name and email will be attached to every change you make so the team knows who did what:</p>
   <div class="code-block">
     git config --global user.name "Your Name"<br>
-    git config --global user.email "you@email.com"
+    git config --global user.email "<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="e59c8a90a58088848c89cb868a88">[email&#160;protected]</a>"
   </div>
   <div class="note">Use your real name and the same email address you signed up to GitHub with.</div>
 
@@ -298,6 +304,11 @@
     <div class="ext-desc">Colors each level of indentation a different color. This is especially important in Python where indentation is not just style — it is syntax. Python uses indentation to define code blocks, so a wrong indent is a broken program. This extension makes indentation immediately visible and easy to read.</div>
   </div>
 
+  <h3 class="sub">Select your Python interpreter</h3>
+  <p>VS Code needs to know which Python installation to use. Press:</p>
+  <div class="code-block">Ctrl + Shift + P</div>
+  <p>Type <strong>Python: Select Interpreter</strong> and select it from the dropdown. You will see a list of Python installations — select the one that says <strong>Python 3.14 (64-bit) C:\Python314\python.exe</strong> and is marked as <strong>global</strong>. This keeps VS Code and your terminal pointed at the same Python installation, which avoids confusing errors down the road.</p>
+
   <h3 class="sub">Set VS Code as your Git editor</h3>
   <p>Run this in the VS Code PowerShell terminal. It tells Git to open VS Code whenever it needs you to write something — so you will never get stuck in a confusing text editor:</p>
   <div class="code-block">git config --global core.editor "code --wait"</div>
@@ -356,7 +367,7 @@
   <p>Close your terminal completely and open a fresh one. The Node.js installer updates your system PATH — a list of places Windows looks for programs — but terminals that were already open when Node installed will not see the update until restarted.</p>
 
   <h3 class="sub">"python is not recognized" error</h3>
-  <p>You likely missed the "Add Python to PATH" checkbox during installation. The quickest fix is to uninstall Python and reinstall it, making sure to check that box on the first screen. Alternatively try using <code>python3</code> instead of <code>python</code> — some Windows setups use that command instead.</p>
+  <p>Close the terminal completely and open a fresh one — the PATH update from installation requires a terminal restart to take effect. If it still does not work, open the Python install manager from the Start menu and run through the configuration again, making sure to answer <code>y</code> to the "Add commands directory to your PATH" prompt.</p>
 
   <h3 class="sub">Terminal is showing Command Prompt instead of PowerShell</h3>
   <p>Click the dropdown arrow next to the terminal name in VS Code, select PowerShell, and use that for all commands. All commands in this guide are written for PowerShell. Command Prompt handles some things differently and will cause confusion.</p>
@@ -380,8 +391,4 @@
   <h3 class="sub">Computer Use is missing from Claude settings</h3>
   <p>Computer Use — the feature that lets Claude click around your actual desktop — is currently available on macOS only and is not yet available on Windows. All other Claude Code features work fully on Windows.</p>
 
-  <div class="footer-note">Questions? Reach out to the team lead before your first session. Do not guess — asking is always faster than troubleshooting alone.</div>
-
-</div>
-</body>
-</html>
+  <div class="footer-note">Questions? Reach out to the team lead before you
